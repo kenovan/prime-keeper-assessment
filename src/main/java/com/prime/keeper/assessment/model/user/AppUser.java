@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.prime.keeper.assessment.model.join.AppUserRole;
 
 @Entity
@@ -30,6 +31,7 @@ public class AppUser {
 	@Column(name = "user_name")
 	private String userName;
 	
+	@JsonIgnore
 	@Column(name = "user_password")
 	private String userPassword;
 	
