@@ -11,8 +11,12 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name = "app_role")
+@JsonInclude(value = Include.NON_NULL)
 public class AppRole {
 
 	@Id

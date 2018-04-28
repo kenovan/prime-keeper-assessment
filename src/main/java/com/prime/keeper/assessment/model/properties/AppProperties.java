@@ -5,8 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
 @Table(name = "app_properties")
+@JsonInclude(value = Include.NON_NULL)
 public class AppProperties {
 
 	@Id

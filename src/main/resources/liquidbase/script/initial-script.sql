@@ -41,31 +41,6 @@ create table application.app_user_role(
 
 alter table application.app_role COMMENT = 'User Role Table(Join table from app_user and app_role)';
 
-create table application.audit_login(
-	id int auto_increment primary key COMMENT 'record id',
-    login_input_name varchar(300) not null COMMENT 'user input name',
-    login_input_password varchar(400) not null COMMENT 'user input password',
-    login_status varchar(50) not null COMMENT 'is user login status, success or fail',
-    login_ip_address varchar(30) COMMENT 'user IP address',
-    login_user_agent longtext COMMENT 'user agent',
-    remarks varchar(100) COMMENT 'remarks for login record',
-    create_date datetime not null default current_timestamp COMMENT 'Record Created Date'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-CREATE INDEX idx1_audit_login
-ON application.audit_login (login_status);
-
-CREATE INDEX idx2_audit_login
-ON application.audit_login (login_ip_address);
-
-CREATE INDEX idx3_audit_login
-ON application.audit_login (login_input_name);
-
-CREATE INDEX idx4_audit_login
-ON application.audit_login (create_date);
-
-alter table application.audit_login COMMENT = 'User Login Activities Audit Table';
-
 create table application.app_user_login(
 	id int auto_increment primary key COMMENT 'record id',
 	user_id int not null COMMENT 'Refer to app_user table id',
@@ -80,3 +55,31 @@ CREATE INDEX idx1_app_user_login
 ON application.app_user_login (user_id, user_session);
 
 alter table application.app_user_login COMMENT = 'User Login Table';
+
+create table application.app_user_account(
+	id int auto_increment primary key COMMENT 'account id',
+	user_id int not null COMMENT 'Refer to app_user table id',
+	balance_amount int not null COMMENT 'User account balance amount in cent unit',
+    create_date datetime not null default current_timestamp COMMENT 'Record Created Date',
+    FOREIGN KEY(user_id) REFERENCES application.app_user(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX idx1_app_user_account
+ON application.app_user_account (user_id);
+
+alter table application.app_user_account COMMENT = 'User Account Table';
+
+create table application.app_user_account_detail(
+	id int auto_increment primary key COMMENT 'account detail id',
+    account_id int not null COMMENT 'Refer to app_user_account table id',
+    transaction_type varchar(10) COMMENT 'Transaction type, credit or debit',
+    transaction_amount int not null COMMENT 'Transaction amount in cent unit',
+    remarks varchar(300) COMMENT 'Transaction remarks',
+    create_date datetime not null default current_timestamp COMMENT 'Record Created Date',
+    FOREIGN KEY(account_id) REFERENCES application.app_user_account(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE INDEX idx1_app_user_account_detail
+ON application.app_user_account_detail (account_id);
+
+alter table application.app_user_account_detail COMMENT = 'User Account Detail Table';

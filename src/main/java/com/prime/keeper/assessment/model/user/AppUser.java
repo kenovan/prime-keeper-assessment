@@ -17,10 +17,14 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.prime.keeper.assessment.model.account.AppUserAccount;
 import com.prime.keeper.assessment.model.join.AppUserRole;
 
 @Entity
 @Table(name = "app_user")
+@JsonInclude(value = Include.NON_NULL)
 public class AppUser {
 
 	@Id
@@ -39,9 +43,13 @@ public class AppUser {
 	@Column(name = "create_date")
 	private Date createDate;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private List<AppUserRole> appUserRoles;
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false)
+	private List<AppUserAccount> appUserAccounts;
 
 	public int getId() {
 		return id;
@@ -81,6 +89,14 @@ public class AppUser {
 
 	public void setAppUserRoles(List<AppUserRole> appUserRoles) {
 		this.appUserRoles = appUserRoles;
+	}
+
+	public List<AppUserAccount> getAppUserAccounts() {
+		return appUserAccounts;
+	}
+
+	public void setAppUserAccounts(List<AppUserAccount> appUserAccounts) {
+		this.appUserAccounts = appUserAccounts;
 	}
 	
 	

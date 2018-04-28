@@ -8,7 +8,7 @@ import com.prime.keeper.assessment.model.user.AppUser;
 
 public interface UserRegistrationService {
 
-	void registerUser(String userName, String password, String roleName)
+	AppUser registerUser(String userName, String password, String roleName)
 			throws MissingParameterException, InvalidUserRoleException, DuplicateUserNameException, Exception;
 
 	AppUser getAppUserByName(String userName) throws UserNotFoundException, Exception;

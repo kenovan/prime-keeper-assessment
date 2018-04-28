@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.prime.keeper.assessment.controller.BaseController;
 import com.prime.keeper.assessment.exception.user.UserNotFoundException;
 import com.prime.keeper.assessment.model.common.ApiResponse;
 import com.prime.keeper.assessment.model.exception.registration.ApiResponseExceptionCode;
@@ -14,7 +15,7 @@ import com.prime.keeper.assessment.service.user.UserRegistrationService;
 
 @RestController
 @RequestMapping(value = "/api/user")
-public class UserController {
+public class UserController extends BaseController {
 
 	@Autowired
 	private UserRegistrationService userRegistrationService;

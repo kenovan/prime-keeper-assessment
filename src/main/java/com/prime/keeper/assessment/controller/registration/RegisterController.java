@@ -12,6 +12,7 @@ import com.prime.keeper.assessment.exception.user.DuplicateUserNameException;
 import com.prime.keeper.assessment.exception.user.InvalidUserRoleException;
 import com.prime.keeper.assessment.model.common.ApiResponse;
 import com.prime.keeper.assessment.model.exception.registration.ApiResponseExceptionCode;
+import com.prime.keeper.assessment.model.user.AppUser;
 import com.prime.keeper.assessment.service.user.UserRegistrationService;
 
 @RestController
@@ -25,8 +26,8 @@ public class RegisterController extends BaseController {
 	public ApiResponse userRegistration(@RequestParam(name = "userName", required = true) String userName,
 			@RequestParam(name = "userPassword", required = true) String userPassword,
 			@RequestParam(name = "userRole", required = true) String userRole) throws MissingParameterException, InvalidUserRoleException, DuplicateUserNameException, Exception {
-		userRegistrationService.registerUser(userName, userPassword, userRole);
-		return new ApiResponse(ApiResponseExceptionCode.SUCCESS.getCode(), null);
+		AppUser appUser = userRegistrationService.registerUser(userName, userPassword, userRole);
+		return new ApiResponse(ApiResponseExceptionCode.SUCCESS.getCode(), appUser);
 	}
 	
 }

@@ -11,10 +11,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.prime.keeper.assessment.model.role.AppRole;
 
 @Entity
 @Table(name = "app_user_role")
+@JsonInclude(value = Include.NON_NULL)
 public class AppUserRole {
 
 	@Id

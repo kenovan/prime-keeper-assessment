@@ -1,5 +1,9 @@
 package com.prime.keeper.assessment.model.exception;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(value = Include.NON_NULL)
 public class ExceptionResponse {
 
 	private String code;
