@@ -10,7 +10,7 @@ create table application.app_user(
 	id int auto_increment primary key COMMENT 'User ID',
 	user_name varchar(100) not null COMMENT 'User Name',
 	user_password varchar(200) not null COMMENT 'Encrypted Password',
-	create_date datetime default current_timestamp COMMENT 'Register date'
+	create_date datetime not null default current_timestamp COMMENT 'Register date'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE UNIQUE INDEX idx1_app_user
@@ -22,7 +22,7 @@ create table application.app_role(
 	id int auto_increment primary key COMMENT 'Role ID',
 	role_name varchar(100) not null COMMENT 'Role Name',
 	role_description varchar(300) COMMENT 'Role Description',
-	create_date datetime default current_timestamp COMMENT 'Register date'
+	create_date datetime not null default current_timestamp COMMENT 'Register date'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE UNIQUE INDEX idx1_app_role
@@ -31,10 +31,10 @@ ON application.app_role (role_name);
 alter table application.app_role COMMENT = 'Role Table';
 
 create table application.app_user_role(
+	id int auto_increment primary key COMMENT 'Table ID Sequence',
 	user_id int not null COMMENT 'Refer to app_user table id',
     role_id int not null COMMENT 'Refer to app_role table id',
-    create_date datetime default current_timestamp COMMENT 'Record Created Date',
-	PRIMARY KEY (user_id, role_id),
+    create_date datetime not null default current_timestamp COMMENT 'Record Created Date',
 	FOREIGN KEY(user_id) REFERENCES application.app_user(id),
     FOREIGN KEY(role_id) REFERENCES application.app_role(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -49,7 +49,7 @@ create table application.audit_login(
     login_ip_address varchar(30) COMMENT 'user IP address',
     login_user_agent longtext COMMENT 'user agent',
     remarks varchar(100) COMMENT 'remarks for login record',
-    create_date datetime default current_timestamp COMMENT 'Record Created Date'
+    create_date datetime not null default current_timestamp COMMENT 'Record Created Date'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE INDEX idx1_audit_login
@@ -72,7 +72,7 @@ create table application.app_user_login(
     user_session varchar(400) not null COMMENT 'user session id',
     user_token varchar(200) not null COMMENT 'user token',
     token_expired datetime not null COMMENT 'uesr token expired date time',
-    create_date datetime default current_timestamp COMMENT 'Record Created Date',
+    create_date datetime not null default current_timestamp COMMENT 'Record Created Date',
     FOREIGN KEY(user_id) REFERENCES application.app_user(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

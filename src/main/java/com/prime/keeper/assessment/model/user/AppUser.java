@@ -1,7 +1,7 @@
 package com.prime.keeper.assessment.model.user;
 
-import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -23,7 +23,7 @@ import com.prime.keeper.assessment.model.join.AppUserRole;
 public class AppUser {
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
 	
@@ -37,9 +37,9 @@ public class AppUser {
 	@Column(name = "create_date")
 	private Date createDate;
 	
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private Collection<AppUserRole> AppUserRoles;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "user_id", referencedColumnName = "id")
+	private List<AppUserRole> appUserRoles;
 
 	public int getId() {
 		return id;
@@ -73,12 +73,12 @@ public class AppUser {
 		this.createDate = createDate;
 	}
 
-	public Collection<AppUserRole> getAppUserRoles() {
-		return AppUserRoles;
+	public List<AppUserRole> getAppUserRoles() {
+		return appUserRoles;
 	}
 
-	public void setAppUserRoles(Collection<AppUserRole> appUserRoles) {
-		AppUserRoles = appUserRoles;
+	public void setAppUserRoles(List<AppUserRole> appUserRoles) {
+		this.appUserRoles = appUserRoles;
 	}
 	
 	

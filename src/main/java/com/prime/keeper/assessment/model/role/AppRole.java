@@ -14,20 +14,20 @@ import javax.persistence.TemporalType;
 @Entity
 @Table(name = "app_role")
 public class AppRole {
-	
+
 	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	private int id;
-	
+
 	@Column(name = "role_name")
 	private String roleName;
-	
+
 	@Column(name = "role_description")
 	private String roleDescription;
-	
+
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(name = "create_date")
+	@Column(name = "create_date", insertable = false, updatable = false)
 	private Date createDate;
 
 	public int getId() {

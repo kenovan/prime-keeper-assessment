@@ -1,8 +1,11 @@
 package com.prime.keeper.assessment.model.join;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
@@ -14,18 +17,21 @@ import com.prime.keeper.assessment.model.role.AppRole;
 @Table(name = "app_user_role")
 public class AppUserRole {
 
-	@EmbeddedId
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private int id;
+
 	@Column(name = "user_id")
 	private int userId;
-	
-	@EmbeddedId
+
 	@Column(name = "role_id")
 	private int roleId;
-	
-	@OneToOne
-	@JoinColumn(name = "role_id", referencedColumnName="id", insertable = false, updatable = false)
+
+	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "role_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private AppRole appRole;
-	
+
 	public int getUserId() {
 		return userId;
 	}
@@ -49,5 +55,5 @@ public class AppUserRole {
 	public void setAppRole(AppRole appRole) {
 		this.appRole = appRole;
 	}
-	
+
 }

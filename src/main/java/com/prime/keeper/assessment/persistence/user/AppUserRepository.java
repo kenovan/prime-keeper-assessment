@@ -9,5 +9,7 @@ import com.prime.keeper.assessment.model.user.AppUser;
 @Repository
 public interface AppUserRepository extends JpaRepository<AppUser, Integer>, JpaSpecificationExecutor<AppUser> {
 
-	public AppUser findByUserName(String userName);
+	public AppUser findOneByUserName(String userName);
+	
+	public Integer countByUserName(String userName);
 }

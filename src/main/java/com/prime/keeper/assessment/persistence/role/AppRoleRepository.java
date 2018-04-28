@@ -9,5 +9,5 @@ import com.prime.keeper.assessment.model.role.AppRole;
 @Repository
 public interface AppRoleRepository extends JpaRepository<AppRole, Integer>, JpaSpecificationExecutor<AppRole> {
 
-	public AppRole findByRoleName(String roleName);
+	public AppRole findOneByRoleName(String roleName);
 }
