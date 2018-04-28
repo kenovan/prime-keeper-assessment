@@ -2,15 +2,14 @@ package com.prime.keeper.assessment.controller.advice;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.http.HttpStatus;
 
 import com.prime.keeper.assessment.exception.user.DuplicateUserNameException;
 import com.prime.keeper.assessment.exception.user.InvalidUserRoleException;
-import com.prime.keeper.assessment.exception.user.UserNotFoundException;
 import com.prime.keeper.assessment.model.exception.ExceptionResponse;
 import com.prime.keeper.assessment.model.exception.registration.ApiResponseExceptionCode;
 
@@ -32,10 +31,4 @@ public class RegistrationControllerAdvise {
         return new ExceptionResponse(ApiResponseExceptionCode.DUPLICATE_USER_NAME.getCode(), e.getMessage());
     }
     
-    @ExceptionHandler(value = UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ResponseBody
-    public ExceptionResponse handleUserNotFoundException(UserNotFoundException e) {
-        return new ExceptionResponse(ApiResponseExceptionCode.USER_NOT_FOUND.getCode(), e.getMessage());
-    }
 }
