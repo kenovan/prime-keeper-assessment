@@ -11,12 +11,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import com.prime.keeper.assessment.exception.login.AuthenticationTokenExpiredException;
 import com.prime.keeper.assessment.exception.login.InvalidPasswordException;
 import com.prime.keeper.assessment.exception.login.UserHasLoggedException;
+import com.prime.keeper.assessment.exception.login.UserNotAuthorizedException;
 import com.prime.keeper.assessment.model.exception.ExceptionResponse;
 import com.prime.keeper.assessment.model.exception.registration.ApiResponseExceptionCode;
 
 @ControllerAdvice
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class LoginControllerAdvise {
+	
+	@ExceptionHandler(value = UserNotAuthorizedException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseBody
+    public ExceptionResponse handleUserNotAuthorizedException(UserNotAuthorizedException e) {
+        return new ExceptionResponse(ApiResponseExceptionCode.USER_NOT_AUTHORIZED.getCode(), e.getMessage());
+    }
 
 	@ExceptionHandler(value = UserHasLoggedException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)

@@ -13,6 +13,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.prime.keeper.assessment.controller.AuthController;
 import com.prime.keeper.assessment.exception.common.UnauthorizedException;
 import com.prime.keeper.assessment.exception.login.AuthenticationTokenExpiredException;
+import com.prime.keeper.assessment.exception.login.UserNotAuthorizedException;
 import com.prime.keeper.assessment.model.login.AppUserLogin;
 import com.prime.keeper.assessment.persistence.login.AppUserLoginRepository;
 import com.prime.keeper.assessment.utils.RequestUtil;
@@ -23,7 +24,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 	private AppUserLoginRepository appUserLoginRepository;
 	
 	@Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws AuthenticationTokenExpiredException, UnauthorizedException, Exception {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object object) throws UserNotAuthorizedException, AuthenticationTokenExpiredException, UnauthorizedException, Exception {
 		if(object != null) {
 			HandlerMethod handlerMethod = (HandlerMethod) object;
 			Object bean = handlerMethod.getBean();
@@ -34,6 +35,9 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter {
 					throw new UnauthorizedException("Authentication Object is empty.");
 				} else {
 					AppUserLogin appUserLogin = appUserLoginRepository.findOneByUserSessionAndUserToken(sessionId, authToken);
+					if(appUserLogin == null) {
+						throw new UserNotAuthorizedException("User not authorized to use this function, please login into your account.");
+					}
 					if(new Date().after(appUserLogin.getTokenExpired())) {
 						throw new AuthenticationTokenExpiredException("Authentication token is expired, please relogin.");
 					}

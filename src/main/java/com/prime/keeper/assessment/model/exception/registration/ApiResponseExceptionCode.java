@@ -17,6 +17,7 @@ public enum ApiResponseExceptionCode {
 	MERCHANT_TO_MERCHAT_TRANSFER("012"),
 	PER_TRANSACTION_LIMIT("013"),
 	SELF_ACCOUNT_TRANSFER_EXCEPTION("014"),
+	USER_NOT_AUTHORIZED("015"),
 	;
 	
 	private String code;

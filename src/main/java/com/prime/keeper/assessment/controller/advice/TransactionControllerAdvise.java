@@ -24,35 +24,35 @@ public class TransactionControllerAdvise {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse handleAccountInsufficientFundException(AccountInsufficientFundException e) {
-        return new ExceptionResponse(ApiResponseExceptionCode.INVALID_USER_ROLE.getCode(), e.getMessage());
+        return new ExceptionResponse(ApiResponseExceptionCode.ACCOUNT_INSUFFICIENT_FUND.getCode(), e.getMessage());
     }
     
     @ExceptionHandler(value = InvalidAccountIdException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse handleInvalidAccountIdException(InvalidAccountIdException e) {
-        return new ExceptionResponse(ApiResponseExceptionCode.INVALID_USER_ROLE.getCode(), e.getMessage());
+        return new ExceptionResponse(ApiResponseExceptionCode.INVALID_ACCOUNT_ID.getCode(), e.getMessage());
     }
     
     @ExceptionHandler(value = MerchantToMerchantTransferException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse handleMerchantToMerchantTransferException(MerchantToMerchantTransferException e) {
-        return new ExceptionResponse(ApiResponseExceptionCode.INVALID_USER_ROLE.getCode(), e.getMessage());
+        return new ExceptionResponse(ApiResponseExceptionCode.MERCHANT_TO_MERCHAT_TRANSFER.getCode(), e.getMessage());
     }
     
     @ExceptionHandler(value = PerTransactionLimitException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse handlePerTransactionLimitException(PerTransactionLimitException e) {
-        return new ExceptionResponse(ApiResponseExceptionCode.INVALID_USER_ROLE.getCode(), e.getMessage());
+        return new ExceptionResponse(ApiResponseExceptionCode.PER_TRANSACTION_LIMIT.getCode(), e.getMessage());
     }
     
     @ExceptionHandler(value = SelfAccountTransferException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public ExceptionResponse handleSelfAccountTransferException(SelfAccountTransferException e) {
-        return new ExceptionResponse(ApiResponseExceptionCode.INVALID_USER_ROLE.getCode(), e.getMessage());
+        return new ExceptionResponse(ApiResponseExceptionCode.SELF_ACCOUNT_TRANSFER_EXCEPTION.getCode(), e.getMessage());
     }
     
 }
