@@ -1,16 +1,25 @@
 package com.prime.keeper.assessment.controller.login;
 
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.prime.keeper.assessment.controller.BaseController;
+import com.prime.keeper.assessment.exception.login.InvalidPasswordException;
+import com.prime.keeper.assessment.exception.login.UserHasLoggedException;
+import com.prime.keeper.assessment.model.login.AppUserLogin;
+import com.prime.keeper.assessment.service.login.UserLoginService;
 
 @RestController
 public class LoginController extends BaseController {
 
-	@GetMapping(value = "/login")
-	public String login() {
-		return requestUtil.getSessionId();
+	@Autowired
+	private UserLoginService userLoginService;
+	
+	@PostMapping(value = "/login")
+	public AppUserLogin login(@RequestParam(name = "username", required = true) String userName
+			, @RequestParam(name = "password", required = true) String userPassword) throws UserHasLoggedException, InvalidPasswordException, Exception {
+		return userLoginService.login(userName, userPassword);
 	}
 }

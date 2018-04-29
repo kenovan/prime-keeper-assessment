@@ -12,6 +12,8 @@ public class RequestUtil {
 
 	@Autowired
 	private HttpServletRequest request;
+	
+	public static final String AUTH_TOKEN_NAME = "auth-token";
 
 	public void setRequest(HttpServletRequest request) {
 		this.request = request;
@@ -43,6 +45,14 @@ public class RequestUtil {
 			} else {
 				return StringUtils.EMPTY;
 			}
+		} else {
+			return StringUtils.EMPTY;
+		}
+	}
+	
+	public String getAuthToken() {
+		if (request != null) {
+			return request.getHeader(AUTH_TOKEN_NAME);
 		} else {
 			return StringUtils.EMPTY;
 		}

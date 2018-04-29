@@ -23,9 +23,9 @@ public class RegisterController extends BaseController {
 	private UserRegistrationService userRegistrationService;
 
 	@PostMapping(value = {"", "/"})
-	public ApiResponse userRegistration(@RequestParam(name = "userName", required = true) String userName,
-			@RequestParam(name = "userPassword", required = true) String userPassword,
-			@RequestParam(name = "userRole", required = true) String userRole) throws MissingParameterException, InvalidUserRoleException, DuplicateUserNameException, Exception {
+	public ApiResponse userRegistration(@RequestParam(name = "username", required = true) String userName,
+			@RequestParam(name = "password", required = true) String userPassword,
+			@RequestParam(name = "role", required = true) String userRole) throws MissingParameterException, InvalidUserRoleException, DuplicateUserNameException, Exception {
 		AppUser appUser = userRegistrationService.registerUser(userName, userPassword, userRole);
 		return new ApiResponse(ApiResponseExceptionCode.SUCCESS.getCode(), appUser);
 	}

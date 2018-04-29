@@ -21,7 +21,7 @@ public class UserController extends BaseController {
 	private UserRegistrationService userRegistrationService;
 	
 	@GetMapping(value = "/info")
-	public ApiResponse userRegistration(@RequestParam(name = "userName", required = true) String userName) throws UserNotFoundException, Exception {
+	public ApiResponse userRegistration(@RequestParam(name = "username", required = true) String userName) throws UserNotFoundException, Exception {
 		AppUser	appUser = userRegistrationService.getAppUserByName(userName);
 		return new ApiResponse(ApiResponseExceptionCode.SUCCESS.getCode(), appUser);
 	}

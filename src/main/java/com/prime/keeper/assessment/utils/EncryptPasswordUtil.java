@@ -13,9 +13,9 @@ public class EncryptPasswordUtil {
 
 	private static final Logger log = LoggerFactory.getLogger(EncryptPasswordUtil.class);
 	
-	protected static final String ALGORITHM = "SHA-1";
+	private static final String ALGORITHM = "SHA-1";
 
-	protected static final String ENCODING = "UTF-8";
+	private static final String ENCODING = "UTF-8";
 
 	public static String encrypt(String password) {
 		MessageDigest msgDigest = null;

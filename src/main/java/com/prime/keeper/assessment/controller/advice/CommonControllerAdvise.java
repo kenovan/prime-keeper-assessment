@@ -9,12 +9,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.prime.keeper.assessment.exception.common.MissingParameterException;
+import com.prime.keeper.assessment.exception.common.UnauthorizedException;
 import com.prime.keeper.assessment.model.exception.ExceptionResponse;
 import com.prime.keeper.assessment.model.exception.registration.ApiResponseExceptionCode;
 
 @ControllerAdvice
 @Order(value = Ordered.LOWEST_PRECEDENCE)
 public class CommonControllerAdvise {
+	
+	@ExceptionHandler(value = UnauthorizedException.class)
+	@ResponseStatus(HttpStatus.UNAUTHORIZED)
+	@ResponseBody
+	public ExceptionResponse handleUnauthorizedException(UnauthorizedException e) {
+        return new ExceptionResponse(ApiResponseExceptionCode.UNAUTHORIZED_REQUEST.getCode(), e.getMessage());
+    }
 	
 	@ExceptionHandler(value = MissingParameterException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
