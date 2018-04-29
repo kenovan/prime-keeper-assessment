@@ -16,6 +16,7 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -34,8 +35,9 @@ public class AppUserAccount {
 	private int userId;
 	
 	@Column(name = "balance_amount")
-	private int balanceAmount;
+	private Integer balanceAmount;
 	
+	@JsonFormat(pattern = "dd-MM-yyyy hh:mm:ss")
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_date")
 	private Date createDate;
@@ -61,11 +63,11 @@ public class AppUserAccount {
 		this.userId = userId;
 	}
 
-	public int getBalanceAmount() {
+	public Integer getBalanceAmount() {
 		return balanceAmount;
 	}
 
-	public void setBalanceAmount(int balanceAmount) {
+	public void setBalanceAmount(Integer balanceAmount) {
 		this.balanceAmount = balanceAmount;
 	}
 
