@@ -32,7 +32,7 @@ public class CommonControllerAdvise {
     }
 
     @ExceptionHandler(value = Exception.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public ExceptionResponse handleException(Exception e) {
         return new ExceptionResponse(ApiResponseExceptionCode.GENERAL_EXCEPTION.getCode(), e.getMessage());
