@@ -86,12 +86,12 @@ public class TransactionServiceImpl implements TransactionService {
 		return this.transfer(appUserOptional.get(), amount);
 	}
 	
-	private AppUserAccount transfer(AppUser receipientUser , int amount) throws MerchantToMerchantTransferException, PerTransactionLimitException, SelfAccountTransferException, AccountInsufficientFundException {
+	private AppUserAccount transfer(AppUser recipientUser , int amount) throws MerchantToMerchantTransferException, PerTransactionLimitException, SelfAccountTransferException, AccountInsufficientFundException {
 		AppUserLogin appUserLogin = appUserLoginRepository.findOneByUserSessionAndUserToken(requestUtil.getSessionId(), requestUtil.getAuthToken());
 		AppUser senderUser = appUserLogin.getAppUser();
-		this.validate(senderUser, receipientUser, amount);
-		AppUserAccount senderAccount = this.credit(senderUser, receipientUser, amount);
-		this.debit(senderUser, receipientUser, amount);
+		this.validate(senderUser, recipientUser, amount);
+		AppUserAccount senderAccount = this.credit(senderUser, recipientUser, amount);
+		this.debit(senderUser, recipientUser, amount);
 		return senderAccount;
 	}
 	
@@ -130,23 +130,23 @@ public class TransactionServiceImpl implements TransactionService {
 		
 	}
 	
-	private AppUserAccount credit(AppUser sender, AppUser receipient, int amount) {
+	private AppUserAccount credit(AppUser sender, AppUser recipient, int amount) {
 		AppUserAccount senderAccount = sender.getAppUserAccounts().get(0);
-		AppUserAccount receipientAccount = receipient.getAppUserAccounts().get(0);
-		AppUserAccountDetail senderAccountDetail = this.createAccountDetail(senderAccount.getId(), new Date(), amount, TransactionType.CREDIT.getValue(), String.format("Transfer %d to reciepient account id: %s", amount, receipientAccount.getId()));
+		AppUserAccount recipientAccount = recipient.getAppUserAccounts().get(0);
+		AppUserAccountDetail senderAccountDetail = this.createAccountDetail(senderAccount.getId(), new Date(), amount, TransactionType.CREDIT.getValue(), String.format("Transfer %d to recipient account id: %s", amount, recipientAccount.getId()));
 		appUserAccountDetailRepository.save(senderAccountDetail);
 		senderAccount.setBalanceAmount(senderAccount.getBalanceAmount() - amount);
 		appUserAccountRepository.save(senderAccount);
 		return senderAccount;
 	}
 	
-	private void debit(AppUser sender, AppUser receipient, int amount) {
+	private void debit(AppUser sender, AppUser recipient, int amount) {
 		AppUserAccount senderAccount = sender.getAppUserAccounts().get(0);
-		AppUserAccount receipientAccount = receipient.getAppUserAccounts().get(0);
+		AppUserAccount recipientAccount = recipient.getAppUserAccounts().get(0);
 		AppUserAccountDetail receipientAccountDetail = this.createAccountDetail(senderAccount.getId(), new Date(), amount, TransactionType.DEBIT.getValue(), String.format("Receive %d amount from sender account id: %s", amount, senderAccount.getId()));
 		appUserAccountDetailRepository.save(receipientAccountDetail);
-		receipientAccount.setBalanceAmount(receipientAccount.getBalanceAmount() + amount);
-		appUserAccountRepository.save(receipientAccount);
+		recipientAccount.setBalanceAmount(recipientAccount.getBalanceAmount() + amount);
+		appUserAccountRepository.save(recipientAccount);
 	}
 	
 	private AppUserAccountDetail createAccountDetail(int accountId, Date now, int amount, String transactionType, String remarks) {
