@@ -54,6 +54,10 @@ create table application.app_user_login(
 CREATE INDEX idx1_app_user_login
 ON application.app_user_login (user_id, user_session);
 
+CREATE INDEX idx2_app_user_login
+ON application.app_user_login (user_session, user_token);
+
+
 alter table application.app_user_login COMMENT = 'User Login Table';
 
 create table application.app_user_account(

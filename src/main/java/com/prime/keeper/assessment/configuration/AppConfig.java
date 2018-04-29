@@ -1,5 +1,6 @@
 package com.prime.keeper.assessment.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -13,8 +14,14 @@ import com.prime.keeper.assessment.interceptor.AuthenticationInterceptor;
 @ComponentScan("com.prime.keeper.assessment")
 public class AppConfig implements WebMvcConfigurer {
 
+	@Bean
+	public AuthenticationInterceptor authenticationInterceptor() {
+	    return new AuthenticationInterceptor();
+	}
+
+	
 	@Override
 	public void addInterceptors(final InterceptorRegistry registry) {
-		registry.addInterceptor(new AuthenticationInterceptor());
+		registry.addInterceptor(authenticationInterceptor());
 	}
 }

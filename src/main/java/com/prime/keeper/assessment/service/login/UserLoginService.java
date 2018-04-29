@@ -9,4 +9,6 @@ public interface UserLoginService {
 	AppUserLogin login(String userName, String password)
 			throws UserHasLoggedException, InvalidPasswordException, Exception;
 
+	boolean logout();
+
 }

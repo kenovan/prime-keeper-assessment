@@ -3,6 +3,9 @@ package com.prime.keeper.assessment.service.login;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.transaction.Transactional;
+import javax.transaction.Transactional.TxType;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,6 +46,7 @@ public class UserLoginServiceImpl implements UserLoginService {
 	 * lang.String, java.lang.String)
 	 */
 	@Override
+	@Transactional(value = TxType.REQUIRED)
 	public AppUserLogin login(String userName, String password)
 			throws UserHasLoggedException, InvalidPasswordException, Exception {
 		AppUserLogin appUserLogin = null;
@@ -89,6 +93,25 @@ public class UserLoginServiceImpl implements UserLoginService {
 			throw e;
 		}
 		return appUserLogin;
+	}
+	
+	@Override
+	@Transactional(value = TxType.REQUIRED)
+	public boolean logout() {
+		boolean isLogout = false;
+		
+		AppUserLogin appUserLogin = appUserLoginRepository.findOneByUserSessionAndUserToken(requestUtil.getSessionId(),
+				requestUtil.getAuthToken());
+		
+		if(appUserLogin != null) {
+			appUserLogin.setTokenExpired(new Date());
+			appUserLoginRepository.saveAndFlush(appUserLogin);
+			isLogout = true;
+		} else {
+			isLogout = true;
+		}
+		
+		return isLogout;
 	}
 
 }
